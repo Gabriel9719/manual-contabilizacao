@@ -1,0 +1,471 @@
+{
+ "titulo": "Manual de Contabilização - Contas a Pagar",
+ "fonte": "1800 lançamentos fictícios do Livro Razão (2025-2026)",
+ "padrao_historico": "PAGTO NF {NF} - {FORNECEDOR} - {DESCRIÇÃO} PA {PA} - REF {MM/AAAA}",
+ "pct_historicos_fora_do_padrao": 0.503,
+ "contas": [
+  {
+   "conta": "8.1.7.03.00.01",
+   "descricao": "Água e energia",
+   "grupo": "Utilidades",
+   "usar_quando": "Faturas de concessionárias de energia elétrica e de água/esgoto dos PAs e da sede.",
+   "nao_usar": "Multas e juros por atraso na fatura (usar despesas de multas). Reembolso de colaborador."
+  },
+  {
+   "conta": "8.1.7.03.00.05",
+   "descricao": "Comunicação de dados",
+   "grupo": "Comunicação",
+   "usar_quando": "Links de internet, MPLS e dados móveis corporativos.",
+   "nao_usar": "Aquisição de equipamentos de rede (avaliar imobilizado)."
+  },
+  {
+   "conta": "8.1.7.03.00.07",
+   "descricao": "Postagens e correspondências",
+   "grupo": "Comunicação",
+   "usar_quando": "Correios, malotes e entregas de documentos.",
+   "nao_usar": "Fretes de mercadorias adquiridas (compõem o custo do bem)."
+  },
+  {
+   "conta": "8.1.7.12.00.01",
+   "descricao": "Aluguéis",
+   "grupo": "Ocupação",
+   "usar_quando": "Aluguel de imóveis de PAs pagos por boleto ou recibo.",
+   "nao_usar": "Condomínio e IPTU (contas próprias). Contratos com provisão automática (já contabilizados)."
+  },
+  {
+   "conta": "8.1.7.18.00.02",
+   "descricao": "Manutenção e conservação de bens",
+   "grupo": "Manutenção",
+   "usar_quando": "Reparos prediais, pintura, elétrica e hidráulica que não aumentam a vida útil do bem.",
+   "nao_usar": "Reformas que ampliam a capacidade ou a vida útil (benfeitoria: avaliar imobilizado)."
+  },
+  {
+   "conta": "8.1.7.33.00.01",
+   "descricao": "Vigilância e segurança",
+   "grupo": "Serviços de terceiros",
+   "usar_quando": "Vigilância armada/desarmada e monitoramento eletrônico.",
+   "nao_usar": "Transporte de valores (conta 8.1.7.33.00.02)."
+  },
+  {
+   "conta": "8.1.7.33.00.02",
+   "descricao": "Transporte de valores",
+   "grupo": "Serviços de terceiros",
+   "usar_quando": "Recolhimento e suprimento de numerário pelas transportadoras.",
+   "nao_usar": "Vigilância patrimonial."
+  },
+  {
+   "conta": "8.1.7.36.00.01",
+   "descricao": "Limpeza e conservação",
+   "grupo": "Serviços de terceiros",
+   "usar_quando": "Contratos de limpeza e conservação (mão de obra terceirizada).",
+   "nao_usar": "Compra avulsa de material de limpeza (material de consumo)."
+  },
+  {
+   "conta": "8.1.7.48.00.01",
+   "descricao": "Material de expediente",
+   "grupo": "Materiais",
+   "usar_quando": "Papel, toner, envelopes e demais materiais de escritório.",
+   "nao_usar": "Equipamentos e móveis (avaliar imobilizado)."
+  },
+  {
+   "conta": "8.1.7.63.00.02",
+   "descricao": "Serviços jurídicos",
+   "grupo": "Serviços técnicos",
+   "usar_quando": "Honorários advocatícios e custas de escritórios contratados.",
+   "nao_usar": "Custas judiciais pagas diretamente ao tribunal (conta de custas)."
+  },
+  {
+   "conta": "8.1.7.63.00.04",
+   "descricao": "Serviços técnicos especializados",
+   "grupo": "Serviços técnicos",
+   "usar_quando": "Consultorias, auditorias e assessorias técnicas.",
+   "nao_usar": "Serviços jurídicos e de TI (contas próprias)."
+  }
+ ],
+ "regras_gerais": [
+  "Classifique pela NATUREZA do gasto, não pelo nome do fornecedor: o mesmo fornecedor pode prestar serviços diferentes.",
+  "Siga o padrão de histórico: PAGTO NF {NF} - {FORNECEDOR} - {DESCRIÇÃO} PA {PA} - REF {MM/AAAA}. Ele permite rastrear qualquer lançamento pelo número da nota.",
+  "Bens com vida útil acima de 1 ano e valor acima do limite da política interna devem ser avaliados como imobilizado.",
+  "Pagamento antecipado (antes da entrega do serviço/produto) vai para a conta de adiantamentos e é baixado na entrega.",
+  "Retenções (ISS, IRRF, PIS/COFINS/CSLL, INSS) não reduzem a despesa: a despesa é o valor bruto da nota.",
+  "Em dúvida, consulte a aba Fornecedores: ela mostra como cada fornecedor foi classificado historicamente e o grau de consistência."
+ ],
+ "fornecedores": [
+  {
+   "fornecedor": "CONSULTORIA ÁGIL ME",
+   "conta_sugerida": "8.1.7.63.00.04",
+   "lancamentos": 135,
+   "consistencia": 0.956,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.33.00.01",
+     "qtd": 3
+    },
+    {
+     "conta": "8.1.7.03.00.05",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.63.00.02",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - CONSULTORIA ÁGIL ME - CONSULTORIA PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "CORREIOS EXPRESSO S.A.",
+   "conta_sugerida": "8.1.7.03.00.07",
+   "lancamentos": 142,
+   "consistencia": 0.958,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.63.00.02",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.63.00.04",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.48.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.18.00.02",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.33.00.01",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - CORREIOS EXPRESSO S.A. - POSTAGENS PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "ENERGIA CENTRO-OESTE S.A.",
+   "conta_sugerida": "8.1.7.03.00.01",
+   "lancamentos": 164,
+   "consistencia": 0.982,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.33.00.02",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.03.00.07",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - ENERGIA CENTRO-OESTE S.A. - ENERGIA ELÉTRICA PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "FIBRA NET TELECOM LTDA",
+   "conta_sugerida": "8.1.7.03.00.05",
+   "lancamentos": 151,
+   "consistencia": 0.954,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.12.00.01",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.63.00.02",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.18.00.02",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.33.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.03.00.07",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.33.00.02",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - FIBRA NET TELECOM LTDA - LINK DE DADOS PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "IMOBILIÁRIA CENTRAL LTDA",
+   "conta_sugerida": "8.1.7.12.00.01",
+   "lancamentos": 161,
+   "consistencia": 0.938,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.36.00.01",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.03.00.05",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.63.00.02",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.63.00.04",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.03.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.33.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.48.00.01",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - IMOBILIÁRIA CENTRAL LTDA - ALUGUEL PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "LIMPA BEM SERVIÇOS LTDA",
+   "conta_sugerida": "8.1.7.36.00.01",
+   "lancamentos": 163,
+   "consistencia": 0.957,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.12.00.01",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.63.00.02",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.03.00.07",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.33.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.33.00.02",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - LIMPA BEM SERVIÇOS LTDA - LIMPEZA E CONSERVAÇÃO PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "MANUTENÇÃO ÔMEGA LTDA",
+   "conta_sugerida": "8.1.7.18.00.02",
+   "lancamentos": 149,
+   "consistencia": 0.913,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.36.00.01",
+     "qtd": 4
+    },
+    {
+     "conta": "8.1.7.63.00.04",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.03.00.07",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.12.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.48.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.03.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.03.00.05",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.63.00.02",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - MANUTENÇÃO ÔMEGA LTDA - MANUTENÇÃO PREDIAL PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "PAPELARIA TOTAL LTDA",
+   "conta_sugerida": "8.1.7.48.00.01",
+   "lancamentos": 132,
+   "consistencia": 0.932,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.03.00.05",
+     "qtd": 3
+    },
+    {
+     "conta": "8.1.7.03.00.07",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.63.00.02",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.33.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.36.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.63.00.04",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - PAPELARIA TOTAL LTDA - MATERIAL DE EXPEDIENTE PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "PROTEGE VIGILÂNCIA LTDA",
+   "conta_sugerida": "8.1.7.33.00.01",
+   "lancamentos": 150,
+   "consistencia": 0.967,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.12.00.01",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.63.00.04",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.03.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.63.00.02",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - PROTEGE VIGILÂNCIA LTDA - VIGILÂNCIA PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "SANEAMENTO ESTADUAL S.A.",
+   "conta_sugerida": "8.1.7.03.00.01",
+   "lancamentos": 163,
+   "consistencia": 0.951,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.63.00.04",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.63.00.02",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.03.00.07",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.33.00.02",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.18.00.02",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.36.00.01",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - SANEAMENTO ESTADUAL S.A. - ÁGUA E ESGOTO PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "SILVA & SOUZA ADVOGADOS",
+   "conta_sugerida": "8.1.7.63.00.02",
+   "lancamentos": 142,
+   "consistencia": 0.923,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.03.00.05",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.03.00.07",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.33.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.18.00.02",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.36.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.63.00.04",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.33.00.02",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.12.00.01",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.03.00.01",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - SILVA & SOUZA ADVOGADOS - HONORÁRIOS ADVOCATÍCIOS PA {PA} - REF {MM/AAAA}"
+  },
+  {
+   "fornecedor": "TRANSVALOR LTDA",
+   "conta_sugerida": "8.1.7.33.00.02",
+   "lancamentos": 148,
+   "consistencia": 0.932,
+   "outras_contas": [
+    {
+     "conta": "8.1.7.18.00.02",
+     "qtd": 3
+    },
+    {
+     "conta": "8.1.7.36.00.01",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.33.00.01",
+     "qtd": 2
+    },
+    {
+     "conta": "8.1.7.63.00.02",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.03.00.07",
+     "qtd": 1
+    },
+    {
+     "conta": "8.1.7.12.00.01",
+     "qtd": 1
+    }
+   ],
+   "modelo_historico": "PAGTO NF {NF} - TRANSVALOR LTDA - TRANSPORTE DE VALORES PA {PA} - REF {MM/AAAA}"
+  }
+ ]
+}

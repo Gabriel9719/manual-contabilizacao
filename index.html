@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Gabriel Antônio Ribeiro">
+<title>Manual de Contabilização - Contas a Pagar</title>
+<style>
+  :root { --azul:#003641; --verde:#00AE9D; --amar:#B7791F; --verm:#C0392B; --cinza:#5f6b70; --linha:#dde3e6; --fundo:#f4f7f8; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--fundo); color:#1d2b30; }
+  header { background:var(--azul); color:#fff; padding:22px 28px 0; }
+  header h1 { margin:0; font-size:22px; } header p { margin:4px 0 14px; opacity:.8; font-size:14px; }
+  nav button { background:none; border:0; color:#cfe3e6; font:inherit; padding:10px 16px; cursor:pointer; border-bottom:3px solid transparent; }
+  nav button.ativo { color:#fff; border-color:var(--verde); }
+  main { max-width:1100px; margin:0 auto; padding:22px 20px 60px; }
+  .busca { width:100%; font:inherit; font-size:16px; padding:12px 14px; border:1px solid var(--linha); border-radius:8px; margin-bottom:16px; }
+  .gerador { background:#fff; border:1px solid var(--linha); border-radius:10px; padding:14px; margin-bottom:16px; display:flex; gap:10px; flex-wrap:wrap; align-items:end; }
+  .gerador label { font-size:12px; color:var(--cinza); display:block; } .gerador input { font:inherit; padding:6px 8px; border:1px solid var(--linha); border-radius:6px; width:120px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px; }
+  .card { background:#fff; border:1px solid var(--linha); border-radius:10px; padding:16px; }
+  .card h3 { margin:0 0 4px; font-size:15px; color:var(--azul); } .conta { font-family:ui-monospace,Consolas,monospace; color:var(--verde); font-weight:600; }
+  .rot { font-size:11px; text-transform:uppercase; color:var(--cinza); margin-top:10px; letter-spacing:.04em; }
+  .hist { font-family:ui-monospace,Consolas,monospace; font-size:12px; background:var(--fundo); padding:8px; border-radius:6px; word-break:break-word; }
+  button.copiar { font:inherit; font-size:12px; margin-top:6px; border:1px solid var(--azul); background:#fff; color:var(--azul); border-radius:6px; padding:4px 10px; cursor:pointer; }
+  .barra { height:6px; background:var(--linha); border-radius:6px; overflow:hidden; margin-top:4px; } .barra i { display:block; height:100%; }
+  .tag { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; background:#fff7e6; color:var(--amar); margin-top:6px; }
+  ol li { margin:8px 0; line-height:1.5; } .aviso { font-size:12px; color:var(--cinza); margin-top:24px; }
+  .oculto { display:none; }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="titulo">Manual de Contabilização</h1>
+  <p id="fonte">Classificação contábil das despesas do Contas a Pagar</p>
+  <nav><button data-aba="fornecedores" class="ativo">Por fornecedor</button><button data-aba="contas">Por conta</button><button data-aba="regras">Regras gerais</button></nav>
+</header>
+<main>
+  <input class="busca" id="busca" placeholder="Busque por fornecedor, conta, descrição ou palavra-chave (ex.: limpeza, 8.1.7.33, aluguel)…" autofocus>
+  <div class="gerador" id="gerador">
+    <div><label>Nº da NF</label><input id="gNF" placeholder="12345"></div>
+    <div><label>PA</label><input id="gPA" placeholder="03"></div>
+    <div><label>Referência</label><input id="gRef" placeholder="10/2026"></div>
+    <div style="font-size:13px;color:var(--cinza);max-width:420px">Preencha e use <b>Copiar histórico</b> em qualquer fornecedor para gerar o histórico no padrão.</div>
+  </div>
+  <section id="fornecedores" class="cards"></section>
+  <section id="contas" class="cards oculto"></section>
+  <section id="regras" class="oculto"><div class="card"><ol id="listaRegras"></ol></div></section>
+  <p class="aviso">Dados fictícios. A conta sugerida para cada fornecedor é aprendida do histórico do Livro Razão (<code>scripts/construir_manual.py</code>); a consistência mostra quantas vezes ele foi classificado nessa conta. · Autor: Gabriel Antônio Ribeiro</p>
+</main>
+<script>
+const $ = (s) => document.querySelector(s);
+const norm = (s) => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+let M;
+
+function corConsistencia(c) { return c >= 0.95 ? "var(--verde)" : c >= 0.85 ? "var(--amar)" : "var(--verm)"; }
+
+function historico(modelo) {
+  return modelo.replace("{NF}", $("#gNF").value || "{NF}").replace("{PA}", ($("#gPA").value || "{PA}").padStart(2, "0"))
+               .replace("{MM/AAAA}", $("#gRef").value || "{MM/AAAA}");
+}
+
+function render() {
+  const q = norm($("#busca").value);
+  const contas = Object.fromEntries(M.contas.map((c) => [c.conta, c]));
+  $("#fornecedores").innerHTML = M.fornecedores
+    .filter((f) => !q || norm([f.fornecedor, f.conta_sugerida, contas[f.conta_sugerida]?.descricao, f.modelo_historico].join(" ")).includes(q))
+    .map((f) => {
+      const c = contas[f.conta_sugerida] || {};
+      return `<div class="card"><h3>${f.fornecedor}</h3>
+        <div><span class="conta">${f.conta_sugerida}</span> · ${c.descricao || ""}</div>
+        <div class="rot">Consistência histórica: ${(f.consistencia * 100).toFixed(0)}% de ${f.lancamentos} lançamentos</div>
+        <div class="barra"><i style="width:${f.consistencia * 100}%;background:${corConsistencia(f.consistencia)}"></i></div>
+        ${f.outras_contas.length ? `<span class="tag">Também já lançado em: ${f.outras_contas.map((o) => `${o.conta} (${o.qtd})`).join(", ")}</span>` : ""}
+        <div class="rot">Modelo de histórico</div><div class="hist">${historico(f.modelo_historico)}</div>
+        <button class="copiar" data-modelo="${f.modelo_historico}">Copiar histórico</button></div>`;
+    }).join("") || "<p>Nenhum fornecedor encontrado. Tente a aba <b>Por conta</b>.</p>";
+  $("#contas").innerHTML = M.contas
+    .filter((c) => !q || norm(Object.values(c).join(" ")).includes(q))
+    .map((c) => `<div class="card"><h3><span class="conta">${c.conta}</span> · ${c.descricao}</h3>
+      <div class="rot">Grupo</div><div>${c.grupo}</div>
+      <div class="rot">Usar quando</div><div>${c.usar_quando}</div>
+      <div class="rot">Não usar para</div><div>${c.nao_usar}</div></div>`).join("");
+}
+
+document.addEventListener("click", async (e) => {
+  if (e.target.matches("nav button")) {
+    document.querySelectorAll("nav button").forEach((b) => b.classList.toggle("ativo", b === e.target));
+    ["fornecedores", "contas", "regras"].forEach((id) => $("#" + id).classList.toggle("oculto", id !== e.target.dataset.aba));
+    $("#gerador").classList.toggle("oculto", e.target.dataset.aba !== "fornecedores");
+  }
+  if (e.target.matches(".copiar")) {
+    const txt = historico(e.target.dataset.modelo);
+    try { await navigator.clipboard.writeText(txt); e.target.textContent = "Copiado!"; }
+    catch { e.target.textContent = "Selecione e copie manualmente"; }
+    setTimeout(() => (e.target.textContent = "Copiar histórico"), 1500);
+  }
+});
+["#busca", "#gNF", "#gPA", "#gRef"].forEach((s) => $(s).addEventListener("input", render));
+
+fetch("data/manual.json").then((r) => r.json()).then((m) => {
+  M = m;
+  $("#titulo").textContent = m.titulo;
+  $("#fonte").textContent = `Gerado a partir de ${m.fonte} · ${Math.round(m.pct_historicos_fora_do_padrao * 100)}% dos históricos ainda fora do padrão`;
+  $("#listaRegras").innerHTML = m.regras_gerais.map((r) => `<li>${r}</li>`).join("");
+  render();
+});
+</script>
+</body>
+</html>
